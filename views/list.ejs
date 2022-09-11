@@ -4,6 +4,12 @@
 <head>
   <meta charset="utf-8">
   <title>To Do List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Irish+Grover&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -12,20 +18,23 @@
   <h1>
     <%= kindOfDay %>
   </h1>
+  <div class="box">
+    <ul>
+      <% for(var i=0;i<newListItems.length ; i++) { %>
+        <div class="item">
+          <input type="checkbox">
+         <p> <%= newListItems[i] %></p>
+        </div>
 
-  <ul>
-    <% for(var i=0;i<newListItems.length ; i++) { %>
-      <li>
-        <%= newListItems[i] %>
-      </li>
-      <% } %>
-  </ul>
+        <% } %>
+    </ul>
 
-  <form action="/" method="post">
-    <input type="text" name="newItem">
-    <button type="submit" name="button">ADD</button>
-  </form>
+    <form class="item" action="/" method="post">
+      <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+      <button type="submit" name="button">+</button>
+    </form>
 
+  </div>
   <footer>
     Made with 💖 by Subrat Kumar
   </footer>
