@@ -35,30 +35,55 @@ const defaultItems = [item1, item2, item3];
 
 app.set('view engine', 'ejs');
 
-Item.insertMany(defaultItems, function (err) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("Successfully inserted !");
-  }
-});
 
 
 
 app.get("/", function (req, res) {
 
- 
+  Item.find({}, function (err, foundItems) {
+    if (foundItems.length === 0) {
+      Item.insertMany(defaultItems, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Successfully inserted !");
+        }
+      });
+      res.redirect("/");
+    } else {
+      res.render("list", { kindOfDay: "Today", newListItems: foundItems });
+    }
+  });
 
-  res.render("list", { kindOfDay: "Today", newListItems: items });
+
 
 });
 
 
 
 app.post("/", function (req, res) {
-  var item = req.body.newItem;
-  items.push(item);
+  const itemName = req.body.newItem;
+
+  const item = new Item({
+    name: itemName
+  });
+
+  item.save();
+
   res.redirect("/");
+
+});
+app.post("/delete", function (req, res) {
+  const checkedItemId = req.body.checkbox;
+
+  Item.findByIdAndRemove(checkedItemId,function(err){
+    if(!err){
+      console.log("Successfully deleted item !");
+      res.redirect("/");
+    } else {
+      console.log(err);
+    }
+  });
 
 });
 
